@@ -1,0 +1,116 @@
+# Por que: Gatilho de execucao restrito a branch main. Garante que apenas codigos validados apos PR (Pull Request) disparem a esteira de integracao.
+trigger:
+  - main
+
+# Por que: Variaveis globais de esteira para padronizar a injecao do Python e a pasta de output de resultados em todos os stages.
+variables:
+  python.version: '3.11'
+  test.results.dir: '$(System.DefaultWorkingDirectory)/test-results'
+
+# Por que: Definicao de estagios (Stages) isolados na arquitetura. Permite reexecucao parcial (retry) de uma fase especifica em caso de falha sem perder o historico das anteriores.
+stages:
+  - stage: API_Integration_Tests
+    displayName: 'API & Integration Tests'
+    # Por que: Pool configurado estritamente para ambiente Windows, garantindo paridade total com a maquina local e scripts PowerShell.
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+      - job: TestAPI
+        displayName: 'Run Pytest for FastAPI'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(python.version)'
+              architecture: 'x64'
+            displayName: 'Set up Python $(python.version)'
+
+          - script: |
+              # Por que: Execucao inline nativa de comandos Windows. A atualizacao do pip mitiga riscos de quebra de resolucao antes da leitura do requirements.txt.
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+              pip install pytest httpx pytest-azurepipelines
+            displayName: 'Install Dependencies and Pytest Plugins'
+
+          - script: |
+              # Por que: Execucao da suite de API exportando os resultados para XML (formato JUnit). 
+              # O formato JUnit e compulsorio para que o Azure DevOps leia, interprete e plote as metricas graficas na tab "Tests".
+              pytest tests/ --junitxml=$(test.results.dir)/api-results.xml
+            displayName: 'Execute API Integration Tests'
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFiles: '$(test.results.dir)/api-results.xml'
+              testRunTitle: 'API Integration Tests'
+              failTaskOnFailedTests: true
+            condition: succeededOrFailed()
+            displayName: 'Publish API Test Results'
+
+  - stage: E2E_UI_Tests
+    displayName: 'Playwright E2E UI Tests'
+    # Por que: "dependsOn" e "condition" aplicam fisicamente o conceito Fail Fast. O Playwright so entra em cena se a API ja foi validada, economizando minutos do Agent de build.
+    dependsOn: API_Integration_Tests
+    condition: succeeded()
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+      - job: RunPlaywright
+        displayName: 'Run Playwright Chromium'
+        steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '$(python.version)'
+              architecture: 'x64'
+            displayName: 'Set up Python $(python.version)'
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+              pip install playwright pytest-playwright pytest-azurepipelines
+            displayName: 'Install E2E Dependencies'
+
+          - script: |
+              # Por que: Download cirurgico dos binarios de execucao. Limitamos ao Chromium para poupar largura de banda e acelerar a build.
+              playwright install chromium
+            displayName: 'Install Playwright Chromium Binaries'
+
+          - script: |
+              # Por que: Subimos o servidor web do portfolio via Uvicorn em background (Start-Process) diretamente no pipeline.
+              # Isso fornece um ambiente real de runtime localhost para o Playwright interagir durante os testes automatizados da UI.
+              Start-Process -FilePath "uvicorn" -ArgumentList "main:app", "--port", "8000" -NoNewWindow
+              
+              # Por que: O Start-Sleep aguarda o startup total e o port bind do ASGI server antes de efetuar as chamadas HTTP e navegacao.
+              Start-Sleep -Seconds 5
+              
+              # Por que: Execucao do pytest focado apenas no diretorio E2E, rodando em modo headless pelo Chromium.
+              pytest e2e/tests/ --junitxml=$(test.results.dir)/e2e-results.xml --browser chromium
+            displayName: 'Start Background Server and Run E2E Tests'
+            env:
+              # Por que: Injecao de variaveis de ambiente durante o runtime simulando o .env. Garante portabilidade de configuracao.
+              APP_ENV: 'CI'
+              HOST: '127.0.0.1'
+              PORT: '8000'
+
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFiles: '$(test.results.dir)/e2e-results.xml'
+              testRunTitle: 'Playwright UI Tests'
+              failTaskOnFailedTests: true
+            condition: succeededOrFailed()
+            displayName: 'Publish E2E Test Results'
+
+  - stage: Production_Deployment
+    displayName: 'Deploy to Production Server'
+    dependsOn: E2E_UI_Tests
+    condition: succeeded()
+    pool:
+      vmImage: 'windows-latest'
+    jobs:
+      - job: DeployApp
+        displayName: 'Mock Deployment Process'
+        steps:
+          - script: |
+              # Por que: Ponto de entrada final da esteira. Se chegou aqui, a qualidade da release esta atestada e madura para subida.
+              # Em cenario produtivo, aqui viria o comando nativo do Azure CLI (az webapp up) ou transferencia dos arquivos da build para IIS Server.
+              Write-Output "Iniciando empacotamento dos artefatos estaticos e logica backend..."
+              Write-Output "Deploy acionado com sucesso no ambiente de destino."
+            displayName: 'Execute Deployment Script'

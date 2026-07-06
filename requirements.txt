@@ -1,0 +1,5 @@
+# Por que: Fixar as versões (pinning) garante que o ambiente seja reprodutível em qualquer máquina ou pipeline de CI/CD, evitando quebras inesperadas por atualizações de minor/patch.
+fastapi==0.111.0
+uvicorn==0.30.1
+jinja2==3.1.4
+python-dotenv==1.0.1

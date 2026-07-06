@@ -1,0 +1,14 @@
+Portfólio:
+
+- Colocar os Dashboards do Power BI;
+
+- Mudar a descrição de "Web Designer" para:(?)
+	> Dev full stack - colocar as linguagens;
+	> Analista de Dados - Dashboards do Power BI com descrições;
+	> Posso colocar alguns elementos no Header, algo do tipo:
+		>> Objetivos;
+			>>> Web Designer - Colocar os conteúdos do Pá Cordeiro e das coisas referentes ao site de captação que estou desenvolvendo com meu irmão. Colocar os certificados referentes a Web Design;
+			>>> Analista de Dados - Colocar o conteúdo de PBI e certificados referentes a análise de dados;
+			>>> QA Analyst (em desenvolvimento?) - Colocar certificados ;
+		>> Certificados:
+			>>> Colocar os certificados com uma breve descrição de cada um;

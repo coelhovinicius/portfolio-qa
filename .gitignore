@@ -1,0 +1,23 @@
+﻿# Por que: Ignora arquivos compilados do interpretador Python para evitar conflitos de cache e manter o repositorio limpo.
+__pycache__/
+*.py[cod]
+*.class
+
+# Por que: Ignora o ambiente virtual isolado. As dependencias devem ser instaladas via pipeline lendo o requirements.txt, a pasta binaria nunca deve ser versionada.
+venv/
+
+# Por que: Impede o vazamento de variaveis de ambiente, configuracoes locais e portas de execucao.
+.env
+
+# Por que: Ignora o state de cache do framework de testes local para nao sobrecarregar o source control com metadados de execucoes locais.
+.pytest_cache/
+
+# Por que: Ignora os relatorios estruturados gerados pelo Pytest e Playwright. A pasta test-results e alocada dinamicamente e os XMLs sao processados nativamente pelo Azure DevOps no momento da build.
+test-results/
+*.xml
+
+# Por que: Ignora configuracoes e caches de workspace especificos da sua maquina local no VS Code.
+.vscode/
+
+# Por que: Ignora arquivos de sistema ocultos gerados pelo OS Windows Explorer.
+Thumbs.db
