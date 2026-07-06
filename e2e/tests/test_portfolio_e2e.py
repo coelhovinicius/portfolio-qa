@@ -26,10 +26,12 @@ def test_portfolio_social_links_contain_valid_hrefs():
     Validates if the social links section correctly renders the LinkedIn and GitHub URLs.
     """
     social_links = portfolio_page.get_social_links_data()
+    
+    # Por que: Atualizacao das assercoes para refletir o roteamento estrito com a barra no final (trailing slash).
     assert "LinkedIn" in social_links
-    assert social_links["LinkedIn"] == "https://www.linkedin.com/in/coelhovinicius"
+    assert social_links["LinkedIn"] == "https://www.linkedin.com/in/coelhovinicius/"
     assert "GitHub" in social_links
-    assert social_links["GitHub"] == "https://github.com/coelhovinicius"
+    assert social_links["GitHub"] == "https://github.com/coelhovinicius/"
 
 def test_portfolio_renders_featured_projects():
     """

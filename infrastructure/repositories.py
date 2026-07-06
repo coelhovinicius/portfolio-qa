@@ -1,7 +1,7 @@
 from core.interfaces import IPortfolioRepository
 
-# Por que: Atualizacao do DTO para refletir a profundidade tecnica do curriculo.
-# A inclusao de novas chaves ('languages') e expansao das listas ('tech_stack', 'certifications') ocorre sem quebrar o contrato da interface.
+# Por que: Implementação concreta da interface. Mantém a responsabilidade única de fornecer os dados (SRP).
+# A inclusão da barra (trailing slash) no final das URLs atende ao padrão estrito de roteamento das plataformas.
 class LocalPortfolioRepository(IPortfolioRepository):
     
     def get_profile_data(self) -> dict:
@@ -10,8 +10,8 @@ class LocalPortfolioRepository(IPortfolioRepository):
             "role": "Senior Quality Assurance Mentor & IT Support",
             "location": "Guarulhos, São Paulo, Brazil",
             "social_links": {
-                "LinkedIn": "https://www.linkedin.com/in/coelhovinicius",
-                "GitHub": "https://github.com/coelhovinicius"
+                "LinkedIn": "https://www.linkedin.com/in/coelhovinicius/",
+                "GitHub": "https://github.com/coelhovinicius/"
             },
             # Por que: O resumo agora vende a arquitetura completa, focando em performance, Shift-Left e resolucao de incidentes.
             "summary": "Automação de testes, performance e cultura Shift-Left. Especialista na criação de frameworks (Web, Mobile, API) e integração de esteiras CI/CD automatizadas no Azure DevOps. Sólida atuação em sustentação N1 a N3, gestão de incidentes, análise de logs para causa raiz, Governança ágil (CAB/GMUD) e otimização de entregas utilizando IA e plataformas Low-Code.",
