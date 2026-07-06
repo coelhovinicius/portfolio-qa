@@ -1,7 +1,7 @@
 from core.interfaces import IPortfolioRepository
 
 # Por que: Implementacao concreta contendo as duas arvores de dados isoladas (pt e en). 
-# A selecao e feita em tempo de execucao pelo controlador da rota com base no input do usuario.
+# Remocao do termo "Sustentacao" e "Production Support" da key "role" para alinhar o objetivo estrito da apresentacao ao mercado.
 class LocalPortfolioRepository(IPortfolioRepository):
     
     def get_profile_data(self, language: str = "pt") -> dict:
@@ -10,7 +10,7 @@ class LocalPortfolioRepository(IPortfolioRepository):
         data_store = {
             "pt": {
                 "name": "VINÍCIUS COELHO BEMFICA",
-                "role": "ANALISTA DE QA / ENGENHEIRO DE AUTOMAÇÃO DE TESTES / SUSTENTAÇÃO",
+                "role": "ANALISTA DE QA / ENGENHEIRO DE AUTOMAÇÃO DE TESTES",
                 "location": "Guarulhos, SP, Brasil",
                 "contact": "(11) 98198-2433 | coelhovinicius@yahoo.com.br",
                 "social_links": {
@@ -55,7 +55,7 @@ class LocalPortfolioRepository(IPortfolioRepository):
             },
             "en": {
                 "name": "VINÍCIUS COELHO BEMFICA",
-                "role": "QA ANALYST / TEST AUTOMATION ENGINEER / PRODUCTION SUPPORT",
+                "role": "QA ANALYST / TEST AUTOMATION ENGINEER",
                 "location": "Guarulhos, SP, Brazil",
                 "contact": "(11) 98198-2433 | coelhovinicius@yahoo.com.br",
                 "social_links": {

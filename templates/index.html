@@ -27,7 +27,6 @@
             color: var(--text-primary); 
         }
 
-        /* Por que: Header definido como relative para ancorar o controle de idiomas (absolute). */
         header { 
             position: relative;
             background: linear-gradient(135deg, var(--primary-color) 0%, #1e293b 100%); 
@@ -59,7 +58,6 @@
             color: #ffffff;
         }
 
-        /* Por que: Indicador de estado para a linguagem em execucao baseada no backend. */
         .lang-toggle a.active {
             color: var(--secondary-color);
             background: #ffffff;
@@ -127,6 +125,7 @@
             font-size: 1.1rem; 
             color: var(--text-secondary); 
             line-height: 1.8; 
+            text-align: justify; /* Por que: Forca o alinhamento justificado para oracoes continuas em documentos formais. */
         }
 
         section#projects { 
@@ -164,6 +163,7 @@
             color: var(--text-secondary); 
             margin: 0; 
             font-size: 0.95rem; 
+            text-align: justify; /* Por que: Garante simetria de leitura para as descricoes detalhadas dos projetos. */
         }
 
         ul { 
@@ -208,7 +208,6 @@
 </head>
 <body>
     <header>
-        <!-- Por que: Roteamento de renderizacao por passagem de query parameters no Href. -->
         <div class="lang-toggle">
             <a href="/?lang=pt" class="{% if current_lang == 'pt' %}active{% endif %}">PT-BR</a>
             <a href="/?lang=en" class="{% if current_lang == 'en' %}active{% endif %}">EN-US</a>
@@ -227,7 +226,6 @@
     
     <div class="container">
         <section id="summary">
-            <!-- Por que: Operador condicional Jinja2 para chaves nao abstraidas no back-end. -->
             <h2>{% if current_lang == 'en' %}Professional Summary{% else %}Resumo Profissional{% endif %}</h2>
             <p>{{ profile.summary }}</p>
         </section>
