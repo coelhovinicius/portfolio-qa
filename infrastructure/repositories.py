@@ -1,12 +1,11 @@
 from core.interfaces import IPortfolioRepository
 
-# Por que: Implementacao concreta contendo as duas arvores de dados isoladas (pt e en). 
-# Remocao do termo "Sustentacao" e "Production Support" da key "role" para alinhar o objetivo estrito da apresentacao ao mercado.
+# Por que: Atualizacao do DTO para suportar a nova renderizacao da interface.
+# A stack tecnologica agora e um objeto complexo contendo a descricao detalhada para alimentar os modais e tooltips.
 class LocalPortfolioRepository(IPortfolioRepository):
     
     def get_profile_data(self, language: str = "pt") -> dict:
         
-        # Por que: Dicionario mestre contendo o mapeamento completo do relatorio profissional em ambos os idiomas.
         data_store = {
             "pt": {
                 "name": "VINÍCIUS COELHO BEMFICA",
@@ -18,7 +17,7 @@ class LocalPortfolioRepository(IPortfolioRepository):
                     "GitHub": "https://github.com/coelhovinicius/"
                 },
                 "summary": "Automação de Testes e Performance: Criação e manutenção de frameworks de testes automatizados para Web, Mobile e APIs usando Cypress, Playwright, Appium, K6, WireMock e Selenium, seguindo padrões de Clean Code e Page Object Model (POM). Processos de QA e DevOps: Atuação estruturada sob a abordagem Shift-Left, integração e configuração de esteiras de CI/CD automatizadas no Azure DevOps e escrita de especificações técnicas funcionais. Automação com IA e Ferramentas No-Code/Low-Code: Desenvolvimento de fluxos inteligentes de automação de processos usando n8n e plataformas assistidas por inteligência artificial (Lovable, Bubble). Sustentação N1 a N3 e Incidentes: Monitoria de ambientes de produção, análise detalhada de logs para causa raiz e triagem de chamados.",
-                "experience_title": "Experiência Profissional em QA e TI",
+                "experience_title": "Experiência Profissional",
                 "projects": [
                     {
                         "name": "Refuturiza Empreendimento Educacional S.A | Analista de QA e Sustentação",
@@ -35,7 +34,18 @@ class LocalPortfolioRepository(IPortfolioRepository):
                 ],
                 "tech_stack_title": "Stack Tecnológico",
                 "tech_stack": [
-                    "Cypress", "Playwright", "Selenium", "Appium", "K6", "WireMock", "Python", "JavaScript", "TypeScript", "Azure DevOps", "Postman", "n8n"
+                    {"name": "Cypress", "description": "Criação e manutenção de frameworks de testes automatizados E2E seguindo padrões de Clean Code e POM."},
+                    {"name": "Playwright", "description": "Desenvolvimento de suítes de testes automatizados robustas e integração em esteiras de CI/CD."},
+                    {"name": "Selenium", "description": "Automação de testes funcionais para aplicações Web com foco em cobertura estrutural."},
+                    {"name": "Appium", "description": "Automação de testes para plataformas Mobile garantindo a estabilidade em múltiplas resoluções."},
+                    {"name": "K6", "description": "Modelagem e execução de testes de carga e performance para validação de resiliência de sistemas."},
+                    {"name": "WireMock", "description": "Mocking de APIs para isolamento de testes e aplicação da abordagem Shift-Left."},
+                    {"name": "Python", "description": "Construção de scripts funcionais, automação de tarefas, processamento de dados e Code Review."},
+                    {"name": "JavaScript", "description": "Desenvolvimento de scripts de suporte e manutenção de frameworks baseados em Node.js."},
+                    {"name": "TypeScript", "description": "Implementação de tipagem estática em frameworks de automação para maior governança do código."},
+                    {"name": "Azure DevOps", "description": "Integração e configuração de pipelines CI/CD automatizados e homologação de processos GMUD."},
+                    {"name": "Postman", "description": "Planejamento e execução de testes automatizados de API REST integrados às esteiras de deploy."},
+                    {"name": "n8n", "description": "Desenvolvimento de fluxos inteligentes de automação de processos assistidos por inteligência artificial."}
                 ],
                 "certifications_title": "Formação e Certificações",
                 "certifications": [
@@ -64,7 +74,7 @@ class LocalPortfolioRepository(IPortfolioRepository):
                     "GitHub": "https://github.com/coelhovinicius/"
                 },
                 "summary": "Test Automation & Performance: Creation and maintenance of automated test frameworks for Web, Mobile, and APIs using Cypress, Playwright, Appium, K6, WireMock, and Selenium, following Clean Code and POM standards. QA Processes & DevOps: Structured operation under the Shift-Left approach, integration of CI/CD pipelines in Azure DevOps. AI Automation & No-Code/Low-Code Tools: Development of intelligent process automation workflows using n8n and AI-assisted platforms. L1 to L3 Support & Incidents: Monitoring of production environments, detailed log analysis for root cause diagnosis, and technical triage of critical tickets.",
-                "experience_title": "Professional QA & IT Experience",
+                "experience_title": "Professional Experience",
                 "projects": [
                     {
                         "name": "Refuturiza Empreendimento Educacional S.A | Software QA & Support Analyst",
@@ -81,7 +91,18 @@ class LocalPortfolioRepository(IPortfolioRepository):
                 ],
                 "tech_stack_title": "Technical Stack",
                 "tech_stack": [
-                    "Cypress", "Playwright", "Selenium", "Appium", "K6", "WireMock", "Python", "JavaScript", "TypeScript", "Azure DevOps", "Postman", "n8n"
+                    {"name": "Cypress", "description": "Creation and maintenance of automated E2E test frameworks following Clean Code and POM standards."},
+                    {"name": "Playwright", "description": "Development of robust automated test suites and integration into CI/CD pipelines."},
+                    {"name": "Selenium", "description": "Functional test automation for Web applications focusing on structural coverage."},
+                    {"name": "Appium", "description": "Test automation for Mobile platforms ensuring stability across multiple resolutions."},
+                    {"name": "K6", "description": "Modeling and execution of load and performance tests to validate system resilience."},
+                    {"name": "WireMock", "description": "API mocking for test isolation and application of the Shift-Left approach."},
+                    {"name": "Python", "description": "Development of functional scripts, task automation, data processing, and Code Review."},
+                    {"name": "JavaScript", "description": "Development of support scripts and maintenance of Node.js based frameworks."},
+                    {"name": "TypeScript", "description": "Implementation of static typing in automation frameworks for better code governance."},
+                    {"name": "Azure DevOps", "description": "Integration and configuration of automated CI/CD pipelines and approval of GMUD processes."},
+                    {"name": "Postman", "description": "Planning and execution of automated REST API tests integrated into deployment pipelines."},
+                    {"name": "n8n", "description": "Development of intelligent process automation workflows using AI-assisted platforms."}
                 ],
                 "certifications_title": "Education & Certifications",
                 "certifications": [
@@ -102,5 +123,4 @@ class LocalPortfolioRepository(IPortfolioRepository):
             }
         }
         
-        # Por que: Fallback de seguranca caso um parametro de idioma invalido seja enviado na URL.
         return data_store.get(language, data_store["pt"])
