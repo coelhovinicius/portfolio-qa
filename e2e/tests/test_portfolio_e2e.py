@@ -32,7 +32,7 @@ def test_portfolio_social_links_contain_valid_hrefs():
     # Assert
     # Por que: Valida a injeção correta da URL no atributo href da âncora, garantindo a navegação funcional de recrutadores.
     assert "LinkedIn" in social_links
-    assert social_links["LinkedIn"] == "https://linkedin.com/br/coelhovinicius"
+    assert social_links["LinkedIn"] == "https://www.linkedin.com/in/coelhovinicius"
     assert "GitHub" in social_links
     assert social_links["GitHub"] == "https://github.com/coelhovinicius"
 
@@ -44,7 +44,6 @@ def test_portfolio_renders_featured_projects():
     project_titles = portfolio_page.get_project_titles()
     
     # Assert
-    # Por que: Validação estrita do mapeamento do projeto rastreado na arquitetura (Price up).
     assert "Price up" in project_titles
 
 def test_portfolio_tech_stack_contains_expected_frameworks():
