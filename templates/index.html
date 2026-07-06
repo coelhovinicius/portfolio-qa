@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ profile.name }} - Portfolio</title>
-    <!-- Por que: Estilização inline estendida para suportar a nova âncora de links sociais e a seção de projetos. -->
     <style>
         body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 0; padding: 20px; background-color: #f4f4f9; color: #333; }
         header { background: #2c3e50; color: #fff; padding: 30px 0; text-align: center; border-radius: 8px 8px 0 0; }
@@ -23,11 +22,9 @@
 </head>
 <body>
     <header>
-        <!-- Por que: Utilização das tags de interpolação Jinja2 para realizar o Server-Side Rendering (SSR). -->
         <h1>{{ profile.name }}</h1>
         <p class="subtitle">{{ profile.role }} | {{ profile.location }}</p>
         <div class="social-links" id="social-links">
-            <!-- Por que: Iteração sobre dicionário no Jinja2 para gerar as tags de âncora (a href) dinamicamente. -->
             {% for platform, url in profile.social_links.items() %}
                 <a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
             {% endfor %}
@@ -41,8 +38,7 @@
         </section>
 
         <section id="projects">
-            <h2>Featured Projects</h2>
-            <!-- Por que: Estrutura de repetição encapsulando blocos de interface para cada projeto mapeado no DTO. -->
+            <h2>Professional Experience & Projects</h2>
             {% for project in profile.projects %}
                 <div class="project-card">
                     <h3>{{ project.name }}</h3>
@@ -61,10 +57,20 @@
         </section>
 
         <section id="certifications">
-            <h2>Certifications</h2>
+            <h2>Academic Background & Certifications</h2>
             <ul>
                 {% for cert in profile.certifications %}
                     <li>{{ cert }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section id="languages">
+            <h2>Languages</h2>
+            <ul>
+                <!-- Por que: Nova secao iterando sobre a array de idiomas injetada pelo back-end. -->
+                {% for language in profile.languages %}
+                    <li>{{ language }}</li>
                 {% endfor %}
             </ul>
         </section>
