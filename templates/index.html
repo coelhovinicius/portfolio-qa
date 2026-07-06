@@ -27,55 +27,58 @@
             color: var(--text-primary); 
         }
 
-        /* Por que: Reducao do padding para diminuir a altura do Header e alteracao do gradiente para um tom de azul mais claro e vibrante. */
+        /* Por que: Reducao drastica do padding (de 80px para 20px) e implementacao de um azul nitidamente mais claro (#2563eb para #60a5fa) para otimizar viewport de notebooks. */
         header { 
             position: relative;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); 
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%); 
             color: #ffffff; 
-            padding: 40px 20px; 
+            padding: 20px 20px 25px; 
             text-align: center; 
         }
 
+        /* Por que: Ajuste do posicionamento do toggle de idioma para nao colidir com as bordas do cabecalho reduzido. */
         .lang-toggle {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            background: rgba(255, 255, 255, 0.15);
-            padding: 8px 12px;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 10px;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             display: flex;
             gap: 10px;
         }
 
-        .lang-toggle a { color: #e2e8f0; text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
+        .lang-toggle a { color: #f1f5f9; text-decoration: none; font-weight: 600; transition: color 0.2s ease; }
         .lang-toggle a:hover { color: #ffffff; }
-        .lang-toggle a.active { color: #1e40af; background: #ffffff; padding: 2px 8px; border-radius: 12px; }
+        .lang-toggle a.active { color: #2563eb; background: #ffffff; padding: 2px 8px; border-radius: 12px; }
 
-        header h1 { margin: 0; font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; }
-        .subtitle { font-size: 1.15rem; color: #e0e7ff; margin: 10px 0 20px; font-weight: 300; }
-        .contact-info { font-size: 0.95rem; color: #e0e7ff; margin-bottom: 20px; }
+        /* Por que: Reducao do peso tipografico (font-size) de todos os elementos do cabecalho para economizar espaço em tela. */
+        header h1 { margin: 0; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px; }
+        .subtitle { font-size: 1rem; color: #eff6ff; margin: 8px 0 12px; font-weight: 400; }
+        .contact-info { font-size: 0.9rem; color: #eff6ff; margin-bottom: 15px; }
 
         .social-links a { 
             background-color: #ffffff; 
-            color: #1e40af; 
+            color: #2563eb; 
             text-decoration: none; 
-            padding: 10px 20px; 
-            margin: 0 8px; 
+            padding: 8px 16px; 
+            margin: 0 5px; 
             border-radius: 6px; 
             font-weight: 600; 
             transition: background-color 0.2s ease, transform 0.2s ease; 
             display: inline-block; 
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
-        .social-links a:hover { background-color: #f1f5f9; transform: translateY(-2px); }
+        .social-links a:hover { background-color: #f8fafc; transform: translateY(-2px); }
 
+        /* Por que: Compensacao da reducao do cabecalho no container principal para evitar espacamentos em branco. */
         .container { 
             max-width: 1000px; 
-            margin: -20px auto 60px; 
+            margin: 0 auto 60px; 
             background: var(--card-background); 
-            padding: 50px; 
-            border-radius: 12px; 
+            padding: 40px 50px; 
+            border-radius: 0 0 12px 12px; 
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
         }
 
@@ -84,14 +87,13 @@
             font-size: 1.7rem; 
             border-bottom: 2px solid var(--border-color); 
             padding-bottom: 10px; 
-            margin-top: 40px; 
-            margin-bottom: 25px; 
+            margin-top: 30px; 
+            margin-bottom: 20px; 
             font-weight: 600; 
         }
 
         section#summary p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.8; text-align: justify; }
 
-        /* Por que: Estilizacao do componente Accordion para as experiencias profissionais em formato de linhas expansíveis. */
         .accordion-item {
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -106,8 +108,8 @@
             text-align: left;
             background: none;
             border: none;
-            padding: 20px;
-            font-size: 1.1rem;
+            padding: 18px 20px;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--primary-color);
             display: flex;
@@ -135,16 +137,15 @@
 
         ul { list-style-type: none; padding: 0; margin: 0; }
 
-        /* Por que: Container flexivel para as tags de Tech Stack e regras para o Tooltip nativo via CSS. */
-        #tech-stack ul { display: flex; flex-wrap: wrap; gap: 15px; }
+        #tech-stack ul { display: flex; flex-wrap: wrap; gap: 12px; }
         
         .tech-tag { 
             position: relative;
             background-color: #f1f5f9; 
             color: var(--secondary-color); 
-            padding: 10px 20px; 
+            padding: 8px 16px; 
             border-radius: 20px; 
-            font-size: 0.95rem; 
+            font-size: 0.9rem; 
             font-weight: 500; 
             border: 1px solid var(--border-color); 
             cursor: pointer;
@@ -154,15 +155,15 @@
         
         .tooltip {
             visibility: hidden;
-            width: 260px;
+            width: 250px;
             background-color: #1e293b;
             color: #f8fafc;
             text-align: center;
             border-radius: 6px;
-            padding: 12px;
+            padding: 10px;
             position: absolute;
             z-index: 10;
-            bottom: 130%;
+            bottom: 135%;
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
@@ -185,7 +186,6 @@
         }
         .tech-tag:hover .tooltip { visibility: visible; opacity: 1; }
 
-        /* Por que: Estrutura isolada do Modal invocavel por JS com overlay escuro. */
         .modal {
             display: none;
             position: fixed;
@@ -225,10 +225,10 @@
             line-height: 1;
         }
         .close-btn:hover { color: #0f172a; }
-        #modalTitle { margin-top: 0; color: var(--secondary-color); font-size: 1.5rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px;}
-        #modalDesc { color: var(--text-secondary); text-align: justify; line-height: 1.7; font-size: 1.05rem; }
+        #modalTitle { margin-top: 0; color: var(--secondary-color); font-size: 1.4rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px;}
+        #modalDesc { color: var(--text-secondary); text-align: justify; line-height: 1.7; font-size: 1rem; }
 
-        #certifications ul li, #languages ul li { padding: 12px 0; border-bottom: 1px solid var(--border-color); color: var(--text-primary); }
+        #certifications ul li, #languages ul li { padding: 10px 0; border-bottom: 1px solid var(--border-color); color: var(--text-primary); font-size: 0.95rem; }
         #certifications ul li:last-child, #languages ul li:last-child { border-bottom: none; }
         #certifications ul li::before, #languages ul li::before { content: "✓"; color: var(--secondary-color); font-weight: bold; margin-right: 10px; }
     </style>
@@ -275,7 +275,6 @@
         <section id="tech-stack">
             <h2>{{ profile.tech_stack_title }}</h2>
             <ul>
-                <!-- Por que: Modificacao do laco for para acessar as propriedades do dicionario complexo do DTO. -->
                 {% for tech in profile.tech_stack %}
                     <li class="tech-tag" onclick="openModal('{{ tech.name }}', '{{ tech.description }}')">
                         {{ tech.name }}
@@ -314,12 +313,10 @@
     </div>
 
     <script>
-        // Por que: Logica de controle do componente Accordion manipulando o max-height para animacao suave.
         function toggleAccordion(button) {
             const item = button.parentElement;
             const content = item.querySelector('.accordion-content');
             
-            // Fecha os outros abertos para manter a interface limpa (Opcional, mas melhora a UX)
             document.querySelectorAll('.accordion-item.active').forEach(activeItem => {
                 if (activeItem !== item) {
                     activeItem.classList.remove('active');
@@ -336,13 +333,11 @@
             }
         }
 
-        // Por que: Logica de controle do Modal manipulando as classes CSS e escutando eventos de teclado/mouse.
         function openModal(name, desc) {
             document.getElementById('modalTitle').innerText = name;
             document.getElementById('modalDesc').innerText = desc;
             const modal = document.getElementById('techModal');
             modal.style.display = 'flex';
-            // Pequeno delay para acionar a transicao de opacidade do CSS
             setTimeout(() => { modal.classList.add('show'); }, 10);
         }
 
@@ -352,7 +347,6 @@
             setTimeout(() => { modal.style.display = 'none'; }, 300);
         }
 
-        // Fechar ao clicar fora
         window.onclick = function(event) {
             const modal = document.getElementById('techModal');
             if (event.target == modal) {
@@ -360,7 +354,6 @@
             }
         }
 
-        // Fechar com a tecla ESC
         document.addEventListener('keydown', function(event) {
             if (event.key === "Escape") {
                 closeModal();
