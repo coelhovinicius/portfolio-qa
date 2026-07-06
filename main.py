@@ -1,36 +1,26 @@
-import os
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
-from dotenv import load_dotenv
-from core.interfaces import IPortfolioRepository
 from infrastructure.repositories import LocalPortfolioRepository
 
-# Por que: Carrega as variáveis definidas no arquivo .env no startup da aplicação.
-load_dotenv()
-
-# Por que: Inicialização do framework com metadados recuperados das variáveis de ambiente.
-app = FastAPI(title=os.getenv("PROJECT_TITLE", "QA Portfolio"))
-
-# Por que: Configuração do motor de templates Jinja2. Separa a lógica de backend (Python) da camada de apresentação (HTML).
+# Por que: Inicializacao do servidor ASGI e do motor de Server-Side Rendering (SSR).
+app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Por que: Função provedora para Injeção de Dependência.
-# O framework FastAPI invocará esta função para instanciar o repositório, facilitando a injeção de Mocks durante testes unitários.
-def get_portfolio_repository() -> IPortfolioRepository:
-    return LocalPortfolioRepository()
+# Por que: Inversao de Dependencia instanciando o repositorio que contem as arvores de dados isoladas.
+repository = LocalPortfolioRepository()
 
 @app.get("/")
-async def render_portfolio(request: Request, repository: IPortfolioRepository = Depends(get_portfolio_repository)):
+def get_portfolio(request: Request, lang: str = "pt"):
     """
-    Renders the main portfolio page.
+    Renders the portfolio page based on the selected language via query parameters.
+    Default fallback is Portuguese ('pt').
     """
-    # Por que: O endpoint atua apenas como um Controller. Ele delega a busca de dados para o repositório injetado.
-    profile_data = repository.get_profile_data()
+    # Por que: A rota intercepta o 'lang' na URL (ex: /?lang=en) e aciona o DTO correspondente.
+    profile_data = repository.get_profile_data(language=lang)
     
-    # Por que: Retorna o template HTML populado com o dicionário de dados. 
-    # Assinatura de parâmetros atualizada para evitar DeprecationWarning do Starlette.
-    return templates.TemplateResponse(
-        request=request,
-        name="index.html", 
-        context={"profile": profile_data}
-    )
+    # Por que: O contexto do Jinja2 agora recebe os dados localizados e o estado atual da lingua para definir o estilo ativo no front-end.
+    return templates.TemplateResponse("index.html", {
+        "request": request, 
+        "profile": profile_data,
+        "current_lang": lang
+    })

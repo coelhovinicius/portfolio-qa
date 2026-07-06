@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ profile.name }} - Portfolio</title>
-    <!-- Por que: Integracao com Google Fonts para tipografia corporativa moderna, substituindo as fontes padrao do navegador. -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Por que: Declaracao de variaveis CSS (Design System) para padronizacao de paleta de cores corporativa. */
         :root {
             --primary-color: #0f172a;
             --secondary-color: #2563eb;
@@ -29,11 +27,44 @@
             color: var(--text-primary); 
         }
 
+        /* Por que: Header definido como relative para ancorar o controle de idiomas (absolute). */
         header { 
+            position: relative;
             background: linear-gradient(135deg, var(--primary-color) 0%, #1e293b 100%); 
             color: #ffffff; 
             padding: 80px 20px; 
             text-align: center; 
+        }
+
+        .lang-toggle {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-toggle a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .lang-toggle a:hover {
+            color: #ffffff;
+        }
+
+        /* Por que: Indicador de estado para a linguagem em execucao baseada no backend. */
+        .lang-toggle a.active {
+            color: var(--secondary-color);
+            background: #ffffff;
+            padding: 2px 8px;
+            border-radius: 12px;
         }
 
         header h1 { 
@@ -48,6 +79,12 @@
             color: #cbd5e1; 
             margin: 15px 0 30px; 
             font-weight: 300; 
+        }
+
+        .contact-info {
+            font-size: 1rem;
+            color: #94a3b8;
+            margin-bottom: 20px;
         }
 
         .social-links a { 
@@ -67,7 +104,6 @@
             transform: translateY(-2px); 
         }
 
-        /* Por que: Utilizacao de card layout com box-shadow para criar profundidade e hierarquia de leitura no conteudo principal. */
         .container { 
             max-width: 1000px; 
             margin: -40px auto 60px; 
@@ -93,7 +129,6 @@
             line-height: 1.8; 
         }
 
-        /* Por que: CSS Grid para alinhamento responsivo e simetrico dos cards de projeto. */
         section#projects { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
@@ -131,20 +166,19 @@
             font-size: 0.95rem; 
         }
 
-        /* Por que: Abordagem Flexbox com badges para visualizacao de tags (Tech Stack, etc), removendo o padrao primitivo de bullets. */
         ul { 
             list-style-type: none; 
             padding: 0; 
             margin: 0; 
         }
 
-        #tech-stack ul, #interests ul { 
+        #tech-stack ul { 
             display: flex; 
             flex-wrap: wrap; 
             gap: 12px; 
         }
 
-        #tech-stack ul li, #interests ul li { 
+        #tech-stack ul li { 
             background-color: #f1f5f9; 
             color: var(--secondary-color); 
             padding: 8px 16px; 
@@ -174,8 +208,16 @@
 </head>
 <body>
     <header>
+        <!-- Por que: Roteamento de renderizacao por passagem de query parameters no Href. -->
+        <div class="lang-toggle">
+            <a href="/?lang=pt" class="{% if current_lang == 'pt' %}active{% endif %}">PT-BR</a>
+            <a href="/?lang=en" class="{% if current_lang == 'en' %}active{% endif %}">EN-US</a>
+        </div>
+        
         <h1>{{ profile.name }}</h1>
         <p class="subtitle">{{ profile.role }} | {{ profile.location }}</p>
+        <p class="contact-info">{{ profile.contact }}</p>
+        
         <div class="social-links" id="social-links">
             {% for platform, url in profile.social_links.items() %}
                 <a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ platform }}</a>
@@ -185,12 +227,13 @@
     
     <div class="container">
         <section id="summary">
-            <h2>Professional Summary</h2>
+            <!-- Por que: Operador condicional Jinja2 para chaves nao abstraidas no back-end. -->
+            <h2>{% if current_lang == 'en' %}Professional Summary{% else %}Resumo Profissional{% endif %}</h2>
             <p>{{ profile.summary }}</p>
         </section>
 
         <section id="projects">
-            <h2>Professional Experience & Projects</h2>
+            <h2>{{ profile.experience_title }}</h2>
             {% for project in profile.projects %}
                 <div class="project-card">
                     <h3>{{ project.name }}</h3>
@@ -200,7 +243,7 @@
         </section>
 
         <section id="tech-stack">
-            <h2>Technical Stack</h2>
+            <h2>{{ profile.tech_stack_title }}</h2>
             <ul>
                 {% for tech in profile.tech_stack %}
                     <li>{{ tech }}</li>
@@ -209,7 +252,7 @@
         </section>
 
         <section id="certifications">
-            <h2>Academic Background & Certifications</h2>
+            <h2>{{ profile.certifications_title }}</h2>
             <ul>
                 {% for cert in profile.certifications %}
                     <li>{{ cert }}</li>
@@ -218,19 +261,10 @@
         </section>
 
         <section id="languages">
-            <h2>Languages</h2>
+            <h2>{{ profile.languages_title }}</h2>
             <ul>
                 {% for language in profile.languages %}
                     <li>{{ language }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section id="interests">
-            <h2>Current Interests & Focus</h2>
-            <ul>
-                {% for interest in profile.interests %}
-                    <li>{{ interest }}</li>
                 {% endfor %}
             </ul>
         </section>

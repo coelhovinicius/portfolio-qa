@@ -1,14 +1,7 @@
 from abc import ABC, abstractmethod
 
-# Por que: Aplicação do Interface Segregation Principle (ISP) e Dependency Inversion Principle (DIP) do SOLID.
-# Criamos um contrato abstrato para o repositório de dados. Isso permite substituir a fonte de dados 
-# (por exemplo, de um arquivo local para um banco de dados) sem alterar a regra de negócio que os consome.
-
+# Por que: Atualizacao do contrato da interface (Dependency Inversion Principle) para obrigar a implementacao a lidar com o parametro de estado de idioma.
 class IPortfolioRepository(ABC):
-    
     @abstractmethod
-    def get_profile_data(self) -> dict:
-        """
-        Retrieves the main profile information.
-        """
+    def get_profile_data(self, language: str = "pt") -> dict:
         pass
